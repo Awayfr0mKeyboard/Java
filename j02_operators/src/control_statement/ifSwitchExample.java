@@ -62,6 +62,9 @@ public class ifSwitchExample {
 		} // switch end
 		
 		System.out.println("Main 종료");
+		
+		
+		
 	} // end main method
 	
 } // end class
