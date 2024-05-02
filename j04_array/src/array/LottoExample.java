@@ -73,7 +73,7 @@ public class LottoExample {
 				// i == 5, j == 6 X
 				// 앞에 있는 값이 더 클 때 큰 수를 뒤로 배치 - 오름차순
 				if (lotto[i] > lotto[j]) {
-				// 앞에 있는 값이 작을 때 뒤의 항목과 위치 이동 - 내림차순
+					// 앞에 있는 값이 작을 때 뒤의 항목과 위치 이동 - 내림차순
 				// if (lotto[i] < lotto[j]) {
 					int temp = lotto[i];
 					lotto[i] = lotto[j];
