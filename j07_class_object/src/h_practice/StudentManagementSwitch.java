@@ -2,7 +2,7 @@ package h_practice;
 
 import java.util.Scanner;
 
-public class StudentManagement {
+public class StudentManagementSwitch {
 
 	public static void main(String[] args) {
 		/*
@@ -22,9 +22,8 @@ public class StudentManagement {
 		
 		// 학생 정보를 저장할 배열
 		Student[] students = null;
-		boolean isRun = true;
 		
-		while (isRun) {
+		while (true) {
 			System.out.println("===================================");
 			System.out.println("1.학생수|2.정보입력|3.정보확인|4.분석|5.종료");
 			System.out.println("===================================");
@@ -48,33 +47,60 @@ public class StudentManagement {
 			
 			switch (selectNo) {
 				case 1 :
-					System.out.println("학생 수를 입력해 주세요.");
-					int studentCount = sc.nextInt();
-					students = new Student[studentCount];
-					System.out.println(studentCount + "명의 학생이 등록되었습니다.");
+					System.out.println("1. 학생 수 입력");
+					int count = sc.nextInt();
+					students = new Student[count];
+					System.out.println("등록할 할 학생 수는 : " + count);
 					break;
 				case 2 :
-					for (int i = 0; i < students.length; i++) {
-						System.out.println((i + 1) + "번 째 학생의 정보를 입력하세요");
-						System.out.println("학번을 입력하세요 > ");
-						int number = sc.nextInt();
-						System.out.println("이름을 입력하세요 > ");
+					System.out.println("2. 학생 정보 입력");
+					for (int i = 0; i < students.length; i++ ) {
+						int num = i + 1;
+						System.out.println(num + "번 째 학생의 이름 입력 >");
 						String name = sc.next();
-						System.out.println("점수를 입력하세요 > ");
+						System.out.println(num + "번 째 학생의 점수 입력 >");
 						int score = sc.nextInt();
-						students[i] = new Student(number, name, score);
-					}
+						students[i] = new Student(num, name, score);
+					} // for end
+					break;
 				case 3 :
-		
+					System.out.println("3. 학생 정보 확인");
+					for (int i = 0; i < students.length; i++) {
+						String info = students[i].getInfo();
+						System.out.println(info);
+					}
+					break;
 				case 4 :
+					System.out.println("4. 학생 정보 분석");
+					int total = 0;			// 총점
+					double avg = 0;			// 평균
+					Student stuMax;			// 최고 득점자 학생 정보
+					Student stuMin;			// 최저 득점자 학생 정보
+					stuMax = students[0];
+					stuMin = students[0];
+
+					for (Student s : students) {
+						int score = s.score;
+						total += score;
+						if (stuMax.score < score) stuMax = s;
+						if (stuMin.score > score) stuMin = s;
+					}
 					
+					System.out.println("전체 합계 : " + total);
+					avg = (double)total / students.length;
+					System.out.printf("평균점수 : %.1f %n", avg);
+					System.out.println("최고 득점자 정보 : " + stuMax.getInfo());
+					System.out.println("최저 득점자 정보 : " + stuMin.getInfo());
+					break;
 				case 5 :
-					System.out.println("종료합니다.");
-					isRun = false;
-					
+					System.out.println("프로그램 종료");
+					// break;
+					return;		// main method 즉시 종료
+				default :
+					System.out.println("메뉴에 없는 번호 입니다.");
 			} // switch end
-		}
-		
+			
+		} // while end
 		
 	} // main end
 	
