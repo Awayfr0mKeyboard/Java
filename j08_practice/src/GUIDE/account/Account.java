@@ -19,7 +19,7 @@ public class Account {
 	}
 
 	public String toString() {
-		return "Account[ ano : "+this.ano+" owner : " + this.owner + " balance : " + this.balance +" ]";
+		return "Account[ ano : " + this.ano+" owner : " + this.owner + " balance : " + this.balance +" ]";
 	}	
 }
 

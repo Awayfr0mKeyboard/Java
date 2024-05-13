@@ -21,7 +21,7 @@ public class MemberManagement{
 	
 	// 메뉴 번호 선택
 	int selectNo;
-
+	int count = 0;
 	// 프로그램 실행용 생성자
 	MemberManagement() {
 		// 회원목록 배열 마지막 인덱스에 관리자 계정 저장
@@ -34,35 +34,137 @@ public class MemberManagement{
 	 * 기능 관리 
 	 */
 	
-	// 프로그램 실행
 	void isRun() {
-		
-	}
+		while(isRun) {
+			System.out.println("===========================================================");
+			System.out.println("1.회원가입|2.로그인|3.회원목록|4.회원정보수정|5.회원탈퇴|6.프로그램 종료");
+			System.out.println("===========================================================");
+			System.out.println("메뉴 선택 > ");
+			
+			if(!sc.hasNextInt()) {
+				System.out.println("번호를 입력해주세요>");
+				sc.next();
+				continue;
+			}
+			selectNo = sc.nextInt();
+			switch(selectNo) {
+				case 1 : 
+					System.out.println("== 회원가입 == ");
+					join();
+					break;
+				case 2 : 
+					System.out.println("== 로그인 == ");
+					login();
+					break;
+				case 3 : 
+					System.out.println("== 회원목록 == ");
+					select();
+					break;
+				case 4 : 
+					System.out.println("== 회원정보수정 == ");
+					update();
+					break;
+				case 5 : 
+					System.out.println("== 회원탈퇴 == ");
+					delete();
+					break;
+				case 6 : 
+					System.out.println("== 종료 == ");
+					terminate();
+					break;
+				default :
+					System.out.println("선택할 수 없는 번호입니다.");
+			} // switch 종료
+		} // while 종료
+	} // run 종료
+
 	
 	// 프로그램 종료
 	void terminate() {
-		
+		isRun = false;
+		System.out.println("프로그램을 종료합니다.");
 	}
 
 	// 회원 가입
 	void join() {
+		System.out.println("사용 정보를 입력해주세요 ---------------");
+		Member newMembers = new Member(); 
 		
-	}
+		String Id = getData("아이디를 입력해주세요 > ");
+		
+		String Pw=getData("비밀번호를 입력해주세요 > ");
+		
+		String PwCheck= getData("비밀번호를 확인해주세요 > ");
+		if (!Pw.equals(PwCheck)) {
+			System.out.println("이미 사용중이거나 비밀번호가 일치하지 않습니다.");
+			return;
+		}
+		
+		String Name = getData("이름을 입력해주세요 > ");
+		
+		members[count] = new Member(count+1,Id,Pw,Name);
+		System.out.println("회원가입 완료");	
+		
+		}	// join end
 	
 	// 로그인
 	void login() {
+		String inputID  = getData("아이디를 입력해주세요 > ");
+		String inputPW	= getData("비밀번호를 입력해주세요 > ");
+
+		for (int i = 0; i < members.length; i++) {
+			if (members[i]!=null) {
+				if (inputID.equals(members[i].mId) && inputPW.equals(members[i].mPw)) {
+					System.out.println("정상적으로 로그인 되었습니다.");
+					System.out.println(members[i].toString());
+					loginMember = members[i];
+				} else if (inputID.equals(master.mId) && inputPW.equals(master.mPw)) {
+					System.out.println(members[99].toString());
+					loginMember = master;
+				} else {
+					System.out.println("일치하는 멤버가 없습니다.");
+					return;
+				}
+			}
+		}	// for end
 		
-	}
+	}	// login end
 
 	// 회원목록 - 로그인한 회원이 관리자 일때만 노출 
 	void select() {
-		
+		if (loginMember == master) {
+			System.out.println(loginMember.toString());
+		} else {
+			System.out.println("관리자만 확인 가능한 메뉴입니다.");
+		}
 	}
 	
 	// 회원정보 수정 - 로그인한 회원 정보랑 일치 하거나 관리자 일때만 수정(이름정보만 수정)
 	void update() {
+		// 로그인 정보가 관리자일 때
+		if (loginMember == master) {
+			System.out.println("관리자 회원 정보 수정 --------");
+			System.out.println(loginMember.toString());
+			System.out.println("수정할 회원 번호를 입력해 주세요.");
+			int num = sc.nextInt();
+			String name = getData("수정할 이름을 입력해주세요.");
+			members[num].mName = name;
+		}
 		
-	}
+		// 로그인 정보가 일반 회원일 때
+		for (int i = 0; i < members.length; i++) {
+			if (members[i] != null) {
+				if (loginMember == members[i]) {
+					System.out.println("내 정보 수정 --------");
+					String pw = getData("비밀번호를 한 번 더 입력해주세요.");
+					members[i].mPw = pw;
+					String name = getData("수정할 이름을 입력해주세요.");
+					members[i].mName = name;
+					break;
+				}
+			}
+		}	// for end
+	}	// update end
 	
 	// 회원탈퇴 - 삭제 할려는 정보가 본인 정보일때만 삭제
 	void delete() {
@@ -98,6 +200,11 @@ public class MemberManagement{
 				System.out.println("회원탈퇴 완료");
 				return;
 			}
+
 		}
 	}
+	String getData(String message) {
+		System.out.println(message);
+		return sc.next();
+}
 }

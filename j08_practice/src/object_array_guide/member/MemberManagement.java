@@ -81,7 +81,8 @@ public class MemberManagement{
 	
 	// 프로그램 종료
 	void terminate() {
-		
+		isRun = false;
+		System.out.println("프로그램을 종료합니다.");
 	}
 
 	// 회원 가입
