@@ -88,7 +88,6 @@ public class MemberManagement{
 	// 회원 가입
 	void join() {
 		System.out.println("사용 정보를 입력해주세요 ---------------");
-		Member newMembers = new Member(); 
 		
 		String Id = getData("아이디를 입력해주세요 > ");
 		
