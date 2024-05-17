@@ -18,6 +18,8 @@ public class BookManagement {
 	
 	public BookManagement(){}
 	
+	Book book = new Book();
+	
 	public void run() {
 		while(isRun) {
 			System.out.println("================================================");
@@ -52,25 +54,74 @@ public class BookManagement {
 		this.isRun = false;
 		System.out.println("프로그램 종료");
 	}
+	
 
 	// 도서 등록
 	public void  registerBook() {
 		System.out.println("1. 도서등록");
 		String title = getData("등록할 도서의 제목을 입력해 주세요 >");
+		book.setTitle(title);
 		String author = getData("등록할 도서의 저자를 입력해 주세요 >");
-		
+		book.setAuthor(author);
+	
+		for (int i = 0; i < books.length; i++) {
+			book.setNum(i+1);
+			if (books[i] == null) {
+				books[i] = new Book(i+1, title, author);
+				break;
+			}
+		}
 	}
 	
 	// 도서 목록 출력
 	public void selectBook() {
 		System.out.println("2. 도서목록");
-	}
+		
+		for (Book b : books) {
+			if (b != null) {
+				System.out.println(b.toString());
+				break;
+			}
+		}
+		
+	} // end selectBook method
 
 	// 도서 정보 수정
 	public void updateBook() {
 		System.out.println("3. 도서수정");
 		int bookNum = getSelectNum("수정 하실 책의 관리번호를 입력해주세요.");
+		Book bookCheck = findBook(bookNum);
 		
+		if (bookCheck == null) {
+			System.out.println("잘못된 번호입니다.");
+			return;
+		}
+		
+		System.out.println(bookCheck.toString());
+		
+		System.out.println("===================================");
+		System.out.println("1. 제목 수정 | 2. 저자 수정 | 3. 수정 완료");
+		System.out.println("===================================");
+		
+		int menuNum = getSelectNum("번호 입력 > ");
+		switch (menuNum) {
+			case 1 :
+				System.out.println("제목 수정");
+				String title = getData("제목 입력 > ");
+				bookCheck.setTitle(title);
+				break;
+			case 2 :
+				System.out.println("저자 수정");
+				String author = getData("저자 입력 > ");
+				bookCheck.setTitle(author);
+				break;
+			case 3 :
+				System.out.println("수정 완료");
+				return;
+			default :
+				System.out.println("잘못 입력된 번호입니다.");
+				break;
+		}
 	}
 	
 	// 도서 목록에서 책 정보 삭제
@@ -81,6 +132,11 @@ public class BookManagement {
 	
 	// 도서관리번호로 책 정보 찾기
 	public Book findBook(int num) {
+		for (int i = 0; i < books.length; i++) {
+			if (books[i] != null && books[i].getNum() == num) {
+				return books[i];
+			}
+		}
 		return null;
 	}
 	
