@@ -15,10 +15,12 @@ public class Practice_02 {
 			int number = (int) (Math.random() * 45 + 1);
 			lotto[i] = number;
 			// 배열에 값을 저장하면서 중복된 값이 나올 경우
-			for (int j = i+1; j < i; j++) {
+			for (int j = 0; j < i; j++) {
+			// for (int j = i+1; j < i; j++) {
 				if (lotto[i] == lotto[j]) {
 					// i의 값을 낮춰 직전의 배열로 다시 돌아가서 새로운 값을 저장 
 					i--;
+					break;
 				}
 			}
 		}
