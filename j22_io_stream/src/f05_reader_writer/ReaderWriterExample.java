@@ -8,7 +8,7 @@ public class ReaderWriterExample {
 	public static void main(String[] args) {
 		// local network 파일 열기
 		// \\10.100.205.231
-		String path = "\\\\10.100.205.231\\public\\etc\\강사 연락처 및 공유폴더.txt";
+		String path = "\\\\10.100.205.231\\public\\etc\\꼬우면카톡해라.txt";
 		
 		Reader reader = null;
 		Writer writer = null;
